@@ -1,0 +1,39 @@
+@startuml
+title Діаграма послідовності - Управління будівельним проектом
+
+participant "Application" as app
+participant "Architect" as arch
+participant "Customer" as cust
+participant "Engineer" as eng
+participant "Model" as model
+
+== Фаза входу ==
+app -> arch: login()
+app -> cust: login()
+app -> eng: login()
+
+== Фаза публікування ==
+app -> arch: setCurrentModel(model)
+app -> arch: publishModel()
+arch -> model: view()
+
+== Фаза переглядання ==
+app -> cust: reviewModel(model)
+cust -> model: getDetails()
+
+app -> eng: reviewModel(model)
+
+== Фаза коментування і перевірення ==
+app -> cust: commentConcept()
+app -> eng: checkConflicts(model)
+eng -> model: getDetails()
+
+app -> eng: sendRequest()
+
+== Фаза оновлення ==
+app -> arch: releaseUpdate()
+
+== Фаза затвердження ==
+app -> cust: approveConcept()
+
+@enduml

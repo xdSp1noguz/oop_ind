@@ -1,0 +1,29 @@
+@startuml
+title Діаграма станів - Життєвий цикл моделі будівельного проекту
+
+[*] --> Created
+
+Created --> Published : Architect.publishModel()
+
+Published --> UnderReview : Customer.reviewModel() або\nEngineer.reviewModel()
+
+state UnderReview {
+  [*] --> CustomerReview
+  CustomerReview --> CommentAdded : Customer.commentConcept()
+  EngineerReview --> ConflictFound : Engineer.checkConflicts()
+  
+  CustomerReview --> EngineerReview : одночасна\nпаралельна перевірка
+  EngineerReview --> CustomerReview
+}
+
+CommentAdded --> UpdateRequired : Інженер знаходить\nконфлікти
+ConflictFound --> UpdateRequired : Engineer.sendRequest()
+
+UpdateRequired --> Published : Architect.releaseUpdate()
+
+EngineerReview --> Approved : Customer.approveConcept()\n(без конфліктів)
+CustomerReview --> Approved : Затвердження без\nзміни
+
+Approved --> [*]
+
+@enduml

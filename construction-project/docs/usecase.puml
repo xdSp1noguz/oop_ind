@@ -1,0 +1,42 @@
+@startuml
+left to right direction
+
+actor "Application" as app
+actor "Architect" as arch
+actor "Customer" as cust
+actor "Engineer" as eng
+
+rectangle "Система управління будівельними проектами" {
+  usecase "Входу в систему" as UC0
+  usecase "Публікування 3D-моделі" as UC1
+  usecase "Переглядання моделі" as UC2
+  usecase "Коментування концепції" as UC3
+  usecase "Затвердження концепції" as UC4
+  usecase "Перевірення конфліктів" as UC5
+  usecase "Надсилання запиту уточнення" as UC6
+  usecase "Випуск оновленої версії" as UC7
+}
+
+app --> arch
+app --> cust
+app --> eng
+
+arch --> UC0
+cust --> UC0
+eng --> UC0
+
+arch --> UC1
+arch --> UC7
+
+cust --> UC2
+cust --> UC3
+cust --> UC4
+
+eng --> UC2
+eng --> UC5
+eng --> UC6
+
+UC1 .> UC2 : extends
+UC3 .> UC2 : extends
+UC5 .> UC2 : extends
+@enduml

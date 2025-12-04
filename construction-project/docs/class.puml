@@ -1,0 +1,56 @@
+@startuml
+abstract class User {
+    # id: string
+    # name: string
+    + constructor(id: string, name: string)
+    + login(): void
+}
+
+interface IReviewer {
+    + reviewModel(model: Model): void
+}
+
+class Model {
+    - id: string
+    - version: number
+    + constructor(id: string, version: number)
+    + getDetails(): string
+    + view(): void
+}
+
+class Architect {
+    - currentModel: Model | null
+    + constructor(id: string, name: string)
+    + setCurrentModel(model: Model): void
+    + publishModel(): void
+    + releaseUpdate(): void
+}
+
+class Customer {
+    + constructor(id: string, name: string)
+    + reviewModel(model: Model): void
+    + commentConcept(): void
+    + approveConcept(): void
+}
+
+class Engineer {
+    + constructor(id: string, name: string)
+    + reviewModel(model: Model): void
+    + checkConflicts(model: Model): void
+    + sendRequest(): void
+}
+
+User <|-- Architect : наслідування
+User <|-- Customer : наслідування
+User <|-- Engineer : наслідування
+
+IReviewer <|.. Customer : реалізація
+IReviewer <|.. Engineer : реалізація
+
+Architect o-- Model : агрегація (0..1)
+Customer ..> Model : використання
+Engineer ..> Model : залежність
+@enduml
+Engineer ..> Model : Залежність
+Customer ..> Model : Залежність
+@enduml
