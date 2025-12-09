@@ -49,8 +49,6 @@ IReviewer <|.. Engineer : реалізація
 
 Architect o-- Model : агрегація (0..1)
 Customer ..> Model : використання
-Engineer ..> Model : залежність
-@enduml
+
 Engineer ..> Model : Залежність
-Customer ..> Model : Залежність
 @enduml
